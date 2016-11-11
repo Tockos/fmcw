@@ -23,7 +23,6 @@ T = 0.000390614;
     dt=T/M;
     fs=1/dt;
 
-function [S_r, f_r, t_r] = genChirp()
     t=0:dt:N*T-dt;
     t_hat=rem(t, T);
 
