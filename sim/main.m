@@ -1,10 +1,10 @@
 clear all;
-v =20;
-r0=300;
+v =5;
+r0=400;
 
 c=299792458;
 v_max_exp=60 ;
-v_res_exp= 2;
+v_res_exp= 1;
 r_max_exp= 1000;
 r_res_exp= 2;
 

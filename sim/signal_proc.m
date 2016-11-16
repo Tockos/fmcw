@@ -1,16 +1,16 @@
 
 function signal_proc(Smixed, N, M)
     
-    Res=fft2(Smixed);
-    Resdir=rot90(log10(abs(Res)));
+    Res=log10(abs(fft2(Smixed)));
+    %Resdir=rot90(log10(abs(Res)));
 
-    Resplot=[fliplr(Resdir(:, 1:N/2)) fliplr(Resdir(:, N/2+1 : N))];
+    Res_plot=[flipud(Res(1:N/2, :)) ; flipud(Res(N/2+1 : N, :))];
 
-    figure(1);
-    imagesc(real(Smixed));
-    title('theta');
+    %figure(1);
+    %imagesc(real(Smixed));
+    %title('theta');
     figure(2);
-    imagesc(Resplot);
+    imagesc(Res_plot);
 
     title('res');
 

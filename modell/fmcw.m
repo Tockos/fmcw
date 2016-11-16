@@ -34,9 +34,9 @@
     Out=exp(1i*Theta);
 
     Res=fft2(Out);
-    Resdir=rot90(log10(abs(Res)));
+    Resdir=log10(abs(Res));
 
-    Resplot=[fliplr(Resdir(:, 1:N/2)) fliplr(Resdir(:, N/2+1 : N))];
+    Resplot=[flipud(Resdir(1:N/2, :)) ;flipud(Resdir(N/2+1:end , : ))];
 
     %figure(1);
     %imagesc(real(Out));
