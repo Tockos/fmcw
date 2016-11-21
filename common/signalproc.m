@@ -1,17 +1,17 @@
 function [Out]=signalproc(targets)
 
-global N M;
+    global N M;
 
-    Mixed=zeros(N, M);
+    Mixed_sum=zeros(N, M);
     for num=1:length(targets)
 
-        Mixed = Mixed + exp(1i*targets(num).Theta);
+        Mixed_sum = Mixed_sum + targets(num).Mixed;
 
     endfor
 
-    Res=fft2(Mixed);
-    Resplot=log10(abs(Res));
+    Freq_mixed=fft2(Mixed_sum);
+    Freq_mixed_plot=log10(abs(Freq_mixed));
 
-    Out=[flipud(Resplot(1:N/2, :)) ;flipud(Resplot(N/2+1:end , : ))];
+    Out=[flipud(Freq_mixed_plot(1:N/2, :)) ;flipud(Freq_mixed_plot(N/2+1:end , : ))];
 
 endfunction
