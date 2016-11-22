@@ -1,5 +1,6 @@
 function [one_chirp, chirp_nos, fs] = gen_chirp(fc, B, T, N, is_disp='none')
 
+    
     BW = 2*(fc + B + sqrt((fc + B / 2) * B / 2));
     acc_fact=1.5;                    # for more accurate chirp signal
     chirp_nos  = round(BW * T * 2*acc_fact);        # (according to shannon theorem)
