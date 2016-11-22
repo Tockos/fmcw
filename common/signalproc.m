@@ -1,8 +1,9 @@
-function [Out]=signalproc(targets)
+function Out=signalproc(targets)
 
-    global N M;
-
+    global N M ;
+    
     Mixed_sum=zeros(N, M);
+
     for num=1:length(targets)
 
         Mixed_sum = Mixed_sum + targets(num).Mixed;
