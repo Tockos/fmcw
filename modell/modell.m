@@ -13,5 +13,4 @@ function targets_ext=modell(targets)
         targets_ext(num).Mixed = exp(1i*targets_ext(num).Theta);
     endfor
 
-    targets_ext(1).Theta
 endfunction
