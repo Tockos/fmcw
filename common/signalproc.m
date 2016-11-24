@@ -10,9 +10,12 @@ function Out=signalproc(targets)
 
     endfor
 
+
     Freq_mixed=fft2(Mixed_sum);
     Freq_mixed_plot=log10(abs(Freq_mixed));
 
     Out=[flipud(Freq_mixed_plot(1:N/2, :)) ;flipud(Freq_mixed_plot(N/2+1:end , : ))];
+
+    
 
 endfunction

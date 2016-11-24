@@ -5,8 +5,6 @@ function [Theta] = get_theta(target)
     global c M N T B gam;
 
     Theta=zeros(N, M);
-    target.fd
-    target.tau0
 
     for n=1:N
         for m=1:M

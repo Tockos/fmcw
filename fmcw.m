@@ -8,9 +8,9 @@
 
     argv1 = argv(){1};
 
-    v_max_exp=100;
+    v_max_exp=500;
     v_res_exp= 1;
-    r_max_exp= 1000;
+    r_max_exp= 500;
     r_res_exp= 1;
 
         
