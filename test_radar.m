@@ -4,19 +4,13 @@ addpath('modell', 'sim', 'common');
 global c B fc T gam M N v_max v_res r_max r_res;   
 
 c=299792458;
-r_max_exp=1 ;%str2num(argv(){1})
-r_res_exp=64;%str2num(argv(){2})
-v_max_exp=1 ;%str2num(argv(){3})
-v_res_exp=64;%str2num(argv(){4})
-
+r_max_exp=str2num(argv(){1});
+r_res_exp=str2num(argv(){2});
+v_max_exp=str2num(argv(){3});
+v_res_exp=str2num(argv(){4});
 
     
 [B, fc, T, gam, M, N, v_max, v_res, r_max, r_res ]=init(v_max_exp, v_res_exp, r_max_exp, r_res_exp);
-
-r_max
-r_res
-v_max
-v_res
 
 
 R_points=1:r_res:r_max;
@@ -50,7 +44,7 @@ v_stat=round(v_max*rand(1, 1));
 %velocy measurement to file
 
     fileID = fopen("/home/tockos/bme/onlab/fmcw/temp/v.txt",'w');
-    fprintf(fileID,'%15s %30s\n','real velocy','measured velocy');
+    fprintf(fileID,'\n\n%15s %30s\n','real velocy','measured velocy');
     fprintf(fileID,'==============================================\n');
 
     for ind=1:length(V_points)
