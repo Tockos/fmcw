@@ -8,7 +8,7 @@ function [Srec, tau_shift] = gen_rec(One_chirp, n, chirp_nos, T, v, r0)
     Srec = zeros(1, chirp_nos);
 
     tau_shift=round(tau*chirp_nos/T);
-    Srec(1+tau_shift : end) = One_chirp(1 : end-tau_shift);
+    Srec(1+tau_shift : end) = One_chirp(1 : end-tau_shift)*0.5;
 
 endfunction
 
