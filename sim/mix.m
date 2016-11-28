@@ -1,6 +1,8 @@
 
-function [Dec_mix] = mix(Strans, Srec, M, chirp_nos)
+function [Dec_mix] = mix(Strans, Srec, chirp_nos)
 
+   global M; 
+    
     Smixed=Strans.*conj(Srec);
     dec_fact = floor(chirp_nos / M);        # mintaszám biztos nagyobb legyen, mint az elvárt (round down)
     Dec_mix = decimate(Smixed, dec_fact, 'fir');

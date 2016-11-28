@@ -3,7 +3,7 @@
     pkg load communications;
 
     addpath( 'sim', 'modell', 'common');   
-    global c B fc T gam M N v_max v_res r_max r_res;   
+    global c B fc T gam M N v_max v_res r_max r_res pt g k t_noise; 
     const;
 
     argv1 = argv(){1};
