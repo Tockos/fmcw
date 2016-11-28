@@ -35,10 +35,11 @@ function disp_rd(Out)
     
     hax=gca();
 
-    set(hax, "ytick", ytick);
-    set(hax, "YTickLabel", yticklabel);
     set(hax, "xtick", xtick);
     set(hax, "XTickLabel", xticklabel);
+    set(hax, "ytick", ytick);
+    set(hax, "YTickLabel", yticklabel);
+    set(hax, "tickdir", "out");
     %set(hax, "ydir", "reverse");
 
 
