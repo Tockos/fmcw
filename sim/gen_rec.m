@@ -9,7 +9,7 @@ function [Srec, tau_shift] = gen_rec(One_chirp, n, chirp_nos, target)
 
     tau_shift=round(tau*chirp_nos/T);
     Srec_clean(1+tau_shift : end) = One_chirp(1 : end-tau_shift)*ur;
-    Srec=Srec_clean+Noise;
+    Srec=Srec_clean;%+Noise;
 
 endfunction
 

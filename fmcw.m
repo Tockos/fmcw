@@ -8,10 +8,10 @@
 
     argv1 = argv(){1};
 
-    r_max_exp= 500;
-    r_res_exp= 2;
-    v_max_exp= 200;
-    v_res_exp= 2;
+    r_max_exp= 300;
+    r_res_exp= 0.5;
+    v_max_exp= 500;
+    v_res_exp= 1;
 
         
     [B, fc, T, gam, M, N, v_max, v_res, r_max, r_res ]=init(v_max_exp, v_res_exp, r_max_exp, r_res_exp);
@@ -28,7 +28,7 @@
         exit(1);
     endif
 
-    Out = signalproc(targets_rec);
-    disp_rd(Out);
+    [Out_2dfft Mixed_sum Out_fft_v] = signalproc(targets_rec);
+    disp_rd(Out_2dfft, Mixed_sum, Out_fft_v);
     
     input(">>>");
