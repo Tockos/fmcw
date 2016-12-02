@@ -1,0 +1,166 @@
+\documentclass{article}
+\def\magyarOptions{defaults=prettiest}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[magyar]{babel}
+\usepackage{makeidx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\graphicspath{ {images/} }
+
+\begin{document}
+
+\title{FMCW RADAR szimulációja}
+\author{Tóth Péter}
+
+\maketitle
+
+\section{Célkitűzés, motiváció}
+
+    \quad Az önálló laboratórium célja az FMCW (\textbf{F}requency \textbf{M}odulated \textbf{C}ontinous \textbf{W}awe)
+    elméletének ismeretében szimulációt készíteni,
+    amely az elv működésének bemutatásán és részletes magyarázatán túl foglalkozik a mérési paraméterek
+    helyes megválasztásával és az ezzel kapcsolatban felmerülő problémákkal. Az egyre finomodó modellek között
+    egy a konkrét jelelakok előállításán alapul. A szimuláció egyszerű zajmodellt is tartalmaz.
+
+    \quad A RADAR (\textbf{RA}dio \textbf{D}etection \textbf{A}nd \textbf{R}anging) rendszerek jelentősége megjelenésük 
+    óta egyre nő.  Napjainkban a lokátorok már nem csak katonai célokat szolgálnak; a légi irányításban, és a közúti 
+    közlekedésben egyaránt fontos szerepük van.  Kis teljesítmény és hardver igénye, valamint pontossága miatt 
+    az FMCW (Frequency Modulated Continous Wawe) elv mára a legszélesebb körben alkalmazott technika.  A következő 
+    elméleti rész ezt a népszerűséget konkrét képletekkel indokolja, mégis értelme van összefoglalni az FMCW előnyeit.
+    Mivel legrégibb és legegyszerűbb az impulzus radar, célszerű az FMCW-t ehhez viszonyítani. Az impulzus radar 
+    a céltárgy távolságát a kibocsájtott jel visszaérkezésének idejéből számolja. A mószer távolságfüggő korlátot 
+    ad tehát a pulzus-frekvenciára, hiszen az újabb jel adásával meg kell várni az előző visszatértét.  A folyamatos 
+    információgyűjtés tehát így lehetetlen. Az FMCW technika ezt frekvenciamodulációval teszi lehetővé.
+    Ez ráadásul a távolság-limit csökkenését is jelenti: az FMCW távolság-limitje a vizsgáló jel hullámhosszával összemérhető.
+    A frekvenciamoduláción alapuló technika
+    a doppler-frekvencia mérésén keresztül információval szolgál a sebességről is. Másik pozitív következmény, hogy 
+    mivel a jel -zaj viszony nem teljesítmény, hanem energia-függő, az adás idejének növelése jelentős teljesítmény
+    megtakarítással jár. Az az előny, ami ebben a jegyzetben a legélesebben kiütközik, a jelfeldolgozás relatív
+    egyszerűsége. A nagyfrekvenciás vizsgáló jelek helyett elég egy különbségi frekvenciás ún. kiütött jelet elemezni.
+    Ez a tény nagyban csökkenti a hardverigényt. Érthető tehát a radarok e fajtájának kitüntetett szerepe.
+
+\section{Irodalomkutatás:}
+    
+A radar-egyenlet:
+
+A radar-egyenlet a teljesítmény viszonyokat írja le a radar adó és vevő iránykarakterisztikájának, a céltárgy
+tulajdonságainak, a hullámhossznak és a távolságnak függvényében.
+Kiindulásul vegyünk izotróp adó antennát! Így a teljesítménysűrűség $R$ távolságban:
+    \begin{equation}
+        S_t=\frac{P_t}{4 \pi R^2}
+    \end{equation}
+ahol $P_t$ a kibocsájtott [\emph{transmitted}] teljesítmény, a nevező pedig az $R$ sugarú gömb felszíne.\newline
+\quad vegyünk most irányított adóantennát! (Már itt érdemes megjegyezni, hogy a vevőantenna e jegyzetben ugyanilyen tulajdonságokkal
+rendelkezik, és irányultsága az adóéval egyezik.) Legyen az adó nyeresége G. Mivel a nyereség definíció szerint a
+főirányban keltett teljesítmény és az azonos betáplálású izotróp antenna által keltett teljesítmény aránya, nyilván
+írható:
+    \begin{equation}
+        S_t=\frac{P_t G}{4 \pi R^2}
+    \end{equation}
+A radar által sugárzott energia reflexiója bonyolult jelenség. Ha adott adóteljesítmény és távolság mellett vizsgálódunk,
+a visszavert teljesítmény függ a céltárgy méretétől, alakjától, térbeli irányultságától és persze anyagától is. Célszerű
+tehát definiálni egy a fenti jelenségeket magába foglaló mennyiséget, a \textbf{R}adar \textbf{C}ross \textbf{S}ection-t [RCS]
+    \begin{equation}
+        \sigma=\frac{P_r}{S_t}
+    \end{equation}
+ahol $P_r$ a céltárgyról a radar irányban reflektált teljesítmény. A fenti kifejezés értelmet ad tehát az RCS elnevezésnek: nyersfordírásban
+radarkeresztmetszet. Ez azt fejezi ki, hogy a radar milyen hatásos felületet lát a céltárgyból.
+A definíció egy másik megközelítésben:
+    \begin{equation}
+        \sigma=\frac{S_r 4 R^2 \pi}{S_t}
+    \end{equation}
+Ez utóbbi kifejezés előnye, hogy $S_r$, azaz a céltárgy reflexiója által a vevőantennánál keltett teljesítménysűrűség közvetlenül mérhető.
+A gömbfelület később kiesik, hiszen pont a vevőnél észlelhető teljesítménysűrűség az érdekes.
+\quad Az RCS értéke dinamikus rendszerben, mozgó, esetleg forgó céltárgy esetén időfüggő. Ezt a jelenséget nevezzük
+fluktuációnak. Ezt a jelenséget bonyolultsága miatt nem itt tárgyaljuk, megérdemel egy külön szakaszt. A továbbiakban
+feltételezzük, hogy ha az RCS nem is konstans, jó alsó korlátot lehet neki adni, biztosítva ezzel a mérés
+megbízhatóságát. Haladjunk tehát tovább RCS-t konstansnak feltételezve!
+\quad Jelölje $A_h$ a vevőantenna hatásos felületét! Ekkor a vett teljesítmény értelemszerűen
+    \begin{equation}
+        P_{rec}=P_r \cdot \frac{A_h}{4 \pi R^2}=\frac{P_t G \sigma A_h}{(4 \pi R^2)^2}
+    \end{equation}
+Alkalmazzuk a reciprocitás miatt fennálló összefüggést:
+    \begin{equation}
+        A_h=\frac{G \lambda^2}{4 \pi}
+    \end{equation}
+Ezt behelyettesítve, és felhasználva, hogy az adó és a vevő azonosak, eljutunk a radaregyenlet egyik ismert formájához:
+    \begin{equation}
+        P_{rec}=\frac{P_t G^2 \lambda^2 \sigma }{(4 \pi)^3 R^4}
+    \end{equation}
+Az egyenlet igazi jelentősége könnyen kidomborítható egy átrendezéssel.
+    \begin{equation}
+        R_{max}=\sqrt[4]{\frac{P_t G^2 \lambda^2 \sigma }{(4 \pi)^3 P_{rec|min}}}
+    \end{equation}
+Itt $R_{max}$ a legnagyobb radar álta ézékelt távolság, $P_{rec|min}$ pedig a jelfeldolgozó egység által még detektálható legkisebb teljesítmény.
+RCS definícióját korábban tárgyaltuk, de sok kapcsolódó jelenségre nem tértünk ki. Vizsgáljuk most ezeket!\newline
+\quad A radar adója polarizált hullámot sugároz. Általános esetben a reflexió solán létrejövő szórt tér két komonensre
+bontható: egy polarizáció tartó, és egy erre ortogonális összetevőre. A vevőre ez utóbbi nincs hatással. Figyelembe kell
+még venni, hogy a céltárgy szórt tere -hasonlóan egy antennáéhoz- csak távolról nézve közelíthető síkhullámok
+összegeként. Egészítsük ki tehát a definíciót:
+    \begin{equation}
+        \sigma=\lim_{R \to \infty} \frac{S_r 4 R^2 \pi}{S_t}
+    \end{equation}
+Fontos még figyelembe venni, hogy az RCS viselkedése nagyban függ a céltárgy hullámhosszhoz viszonyított méreteitől.
+Ennek megfelelően három zónát különböztetünk meg:
+    \begin{enumerate}
+        \item Rayleigh zóna: $\lambda$ jóval nagyobb a céltárgy legnagyobb keresztmetszeténél, ezért a cétárgy mérete a
+            meghatározó az RCS szempontjából.
+        \item Rezonancia zóna: A két mennyiség egy nagyságrendbe esik. Minden tényező számít, így a vizsgálat itt a
+            legbonyolultabb.
+        \item Optikai zóna: A megvilágított tárgy méretei jóval meghaladják a hullámhosszt, így az RCS kialakításában az
+            irányultság és az alak lesz a döntő.
+    \end{enumerate}
+A fentiekből látszik, milyen összetett feladat egy komplex céltárgy vizsgálata, ahol minden részegység külön-külön
+alakítja ki a visszavert jelet a saját paraméterei szerint. Mivel a választ ezek összege alakítja ki, ha egymáshoz
+képest változnak, az nem csak a jel amplitúdóját, hanem fázisát is befolyásolja, hiszen két komplex vektor összege
+fázisban a nagyobb felé tolódik el. Sajnos a fázis koherenciája a doppler mérés szempontjából döntő fontosságú.
+A fluktuáció tehát csökkenti a doppler mérés pontosságát, és extrém esetben akár teljesen értelmezhetetlenné teheti az eredményeket.
+Ezzel világossá vált, hogy a jelenség nem csak a jel-zaj viszonyra lehet hatással, tehát valamilyen módszerel
+keretek közé kell szorítani, vagy becsülni kell az RCS értékét.
+Ez viszont nagyon sok, a megfigyelési pontról nézve véletlenszerű tényezőtől függ. Ilyenek pl az időjárásviszonyok,
+vagy a tárgy szöge. Nyilvánvaló, hogy a fluktuációra nem adható képlet, kénytelenek vagyunk $\sigma$-t valószínűségi
+változóként kezelni.
+A fluktuáció leírására több modell létezik. Mind közül a Peter Swerling által kidolgozott a legelterjedtebb.
+Az általános formula, amelyből a modell elemei származnak, a Khí-négyzet eloszlás sűrűségfüggvénye, amely $\sigma$ korrelációs
+tulajdonságait írja le.
+    \begin{equation}
+        f(\sigma)= \frac{m}{\Gamma(m) \sigma_{av}} \left( \frac{m \sigma}{\sigma_{av}} \right) ^{m-1}
+        e^{\frac{-m \sigma}{\sigma_{av}}}
+    \end{equation}
+Ahol $\sigma_{av}$ az RCS időátlaga, $m$ pedig a rendszer szabadságfokának fele. (Egy dinamikus rendszer szabadságfokán annak
+független mozgásképesséeit értjük.) 
+A modellek származtatását nem matematikailag korrekt úton, hanem az alap gondolat bemutatásával végezzük.
+Swerling öt különböző modellt alkotott a fenti sűrűségfüggvény felhasználásával.
+
+\subsection{swerling 1 és 2}
+    Azt, hogy a két modellt együtt tárgyaljuk, indokolja, hogy sűrűségfüggvényük azonos. A céltárgyat az ábrán látható
+    módon több, hasonló szórási felületként modellezzük. A rendszer szabadságfoka 2, amely a fenti általános képletet az
+    $m=1$ helyettesítéssel a következőképpen alakítja:
+    \begin{equation}
+        f(\sigma)= \frac{1}{\sigma_{av}} e^{- \frac{\sigma}{\sigma_{av}}}
+    \end{equation}
+
+    \subsection{swerling 3 4}
+\section{A megoldás terve:}
+
+\section{A megoldás menete:}
+    A szimulációt -ahogy a bevezetésben is áll- egyre finomodó modellekkel végezzük. Nulladik közelítésben érdemes csak
+    a hasznos jelenségeket figyelembe venni, vagyis csak fb-vel és fd-vel számolni. Ebben az ideális esetben, ami persze
+    elméletileg sem elérhető, a céltárgy helyzete és sebessége a felbontás pontosságával egyérteműen meghatározható.
+    A kiütött jelből minden zavaró tagot kizártunk, ezért a kapott eredmény tökéletes lesz. \newline
+    Konkrétan: A fázis képlete:
+        \begin{equation}
+            \theta_{mixed}(n, \hat{t})=\Phi_0-2 \pi f_D nT+2 \pi \cdot \gamma \tau_0\cdot \hat{t}
+            \label{theta_mixed_discrete}
+        \end{equation}
+    Illetve ha az időt mintavételi idővel diszkretizáljuk, olyan formulához
+    jutunk, amely könnyen implementálható:
+        \begin{equation}
+            lofasz
+        \end{equation}
+
+\end{document}

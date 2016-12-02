@@ -18,14 +18,14 @@ function [one_chirp, chirp_nos, fs] = gen_chirp(fc, B, T, N, is_disp='none')
 
     %Strans=repmat(Sfm, [N, 1]);
     if is_disp == 'spec'
-        disp_spec(Sfm, T, fs, fc, t);        #spectrogram
+        disp_spec(one_chirp, T, fs, fc, t);        #spectrogram
 
     elseif is_disp == 'plot'
-        disp_plot(Sfm, t, N, fc, theta);    
+        disp_plot(one_chirp, t, N, fc, theta);    
 
     elseif is_disp == 'both'
-        disp_spec(Sfm, T, fs, fc, t)
-        disp_plot(Sfm, t, N, fc, theta);
+        disp_spec(one_chirp, T, fs, fc, t)
+        disp_plot(one_chirp, t, N, fc, theta);
 
     endif
 
