@@ -1,6 +1,6 @@
 function [Out_2dfft Mixed_sum Out_fft_v]=signalproc(targets)
 
-    global N M ;
+    global N M Noise_re_vect Noise_re_matr Noise_im_vect Noise_im_matr;
     
     Mixed_sum=zeros(N, M);
 
@@ -9,6 +9,14 @@ function [Out_2dfft Mixed_sum Out_fft_v]=signalproc(targets)
         Mixed_sum = Mixed_sum + targets(num).Mixed;
 
     endfor
+
+    mix_re = real(Mixed_sum) + Noise_re_matr;
+    mix_im = imag(Mixed_sum) + Noise_im_matr;
+
+
+    %zajkeltéshez kommelteld vissza a következő sort
+    Mixed_sum = mix_re+1i*mix_im;
+
 
 
     %Out_fft_r=

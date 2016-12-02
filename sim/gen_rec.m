@@ -1,6 +1,6 @@
-function [Srec, tau_shift] = gen_rec(One_chirp, n, chirp_nos, target)
+function [Srec, tau_shift] = gen_rec(One_chirp, n, chirp_nos, target, Noise)
 
-    global c T Noise;
+    global c T Noise_re_vect;
     r   = target.r0 - target.v*(n-1)*T;            # R=R0-v*t
     tau = 2*r / c;              #time dependent time shift
     ur=sqrt(target.pr);
@@ -9,7 +9,7 @@ function [Srec, tau_shift] = gen_rec(One_chirp, n, chirp_nos, target)
 
     tau_shift=round(tau*chirp_nos/T);
     Srec_clean(1+tau_shift : end) = One_chirp(1 : end-tau_shift)*ur;
-    Srec=Srec_clean;%+Noise;
+    Srec=Srec_clean;%+Noise_re_vect;
 
 endfunction
 

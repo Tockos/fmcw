@@ -1,8 +1,7 @@
-function targets_ext = simulation(targets)
+function targets_ext = simulation(targets, Noise)
 
-    global fc B T N M pt g k t_noise Noise;
+    global fc B T N M pt g k t_noise Noise_re_vect;
     [One_chirp, chirp_nos, fs] = gen_chirp(fc, B, T, N, 'none');
-    Noise = get_noise(chirp_nos);
     
     targets_ext = struct([]);
 

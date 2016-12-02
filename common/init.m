@@ -1,4 +1,4 @@
-function [B, fc, T, gam, M, N, v_max, v_res, r_max, r_res ]=init(v_max_exp, v_res_exp, r_max_exp, r_res_exp)
+function [B, fc, T, gam, M, N, v_max, v_res, r_max, r_res, fb_max ]=init(v_max_exp, v_res_exp, r_max_exp, r_res_exp)
     c=3e8;
 
     M = 2^round(log2(r_max_exp / r_res_exp));
@@ -21,5 +21,7 @@ function [B, fc, T, gam, M, N, v_max, v_res, r_max, r_res ]=init(v_max_exp, v_re
     fc=c/(2*v_max)/T;            
     
     gam=B/T;
+
+    fb_max = M/T;
   
 endfunction
